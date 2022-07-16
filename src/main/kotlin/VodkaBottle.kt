@@ -5,13 +5,22 @@ class VodkaBottle() : Bottle {
 
     override fun add(liquid: Liquid): Bottle {
         this.volume += liquid.volume()
-        val spiritVolume = this.degree * this.volume + liquid.volume() * liquid.degree()
-        val allVolume = this.volume + liquid.volume()
-        this.degree = spiritVolume / allVolume
+
+        val spiritVolume = this.degree * this.volume + liquid.volume() * liquid.degree() / 100
+        val allVolume = this.volume
+
+        if (allVolume > 0)
+            this.degree = spiritVolume / allVolume * 100
+        else
+            this.degree = 0.0;
+
         return this
     }
 
     override fun spoil(): Mixture {
-        TODO("Возвращать микстуру? Я хз как сделать еще")
+        return Vodka(
+            BaseSpirit(volume * degree / 100),
+            BaseWater(volume - volume * degree / 100),
+        )
     }
 }

@@ -12,7 +12,7 @@ fun main(args: Array<String>) {
         ).degree()
     )
 
-    VodkaBottle()
+    val vodka = VodkaBottle()
         .add(
             Vodka(
                 BaseSpirit(1200.0),
@@ -26,4 +26,7 @@ fun main(args: Array<String>) {
             )
         )
 
+    val spoiledVodka = vodka.spoil()
+
+    println("volume:${spoiledVodka.volume()}, degree: ${spoiledVodka.degree()}")
 }
