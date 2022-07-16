@@ -8,8 +8,6 @@ class VodkaBottle(
     init {
         volume = mixtures.sumOf { it.volume() }
         degree = mixtures.sumOf { it.degree() * it.volume() } / volume
-
-        println("3 vol ${volume} degree = ${degree}")
     }
 
     override fun add(mixture: Mixture): Bottle {
