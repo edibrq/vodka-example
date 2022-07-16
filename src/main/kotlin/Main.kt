@@ -12,13 +12,8 @@ fun main(args: Array<String>) {
             )
         ).add(
             Vodka(
-                BaseSpirit(1200.0),
-                BaseWater(0.0)
-            )
-        ).add(
-            Vodka(
-                BaseSpirit(1200.0),
-                BaseWater(0.0)
+                BaseSpirit(400.0),
+                BaseWater(100.0)
             )
         ).spoil().degree()
     )
