@@ -1,18 +1,9 @@
 class Vodka(
-    spirit: Liquid,
-    water: Liquid
+    private val spirit: Spirit,
+    private val water: Water
 ) : Mixture {
 
-    private var volume: Double = 0.0
-    private var degree: Double = 0.0
+    override fun degree(): Double = spirit.volume() / (water.volume() + spirit.volume())
 
-    init {
-        this.volume = spirit.volume() + water.volume()
-        this.degree = spirit.degree() * spirit.volume() / (water.volume() + spirit.volume())
-    }
-
-    override fun degree(): Double  = degree
-
-    override fun volume(): Double = volume
-
+    override fun volume(): Double = spirit.volume() + water.volume()
 }

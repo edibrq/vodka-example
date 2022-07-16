@@ -1,26 +1,27 @@
-class VodkaBottle() : Bottle {
+class VodkaBottle(
+    vararg mixtures: Mixture
+) : Bottle {
 
     private var volume = 0.0
     private var degree = 0.0
 
-    override fun add(liquid: Liquid): Bottle {
-        this.volume += liquid.volume()
+    init {
+        volume = mixtures.sumOf { it.volume() }
+        degree = mixtures.sumOf { it.degree() * it.volume() } / volume
 
-        val spiritVolume = this.degree * this.volume + liquid.volume() * liquid.degree() / 100
-        val allVolume = this.volume
+        println("3 vol ${volume} degree = ${degree}")
+    }
 
-        if (allVolume > 0)
-            this.degree = spiritVolume / allVolume * 100
-        else
-            this.degree = 0.0;
-
+    override fun add(mixture: Mixture): Bottle {
+        if (volume == 0.0)
+            volume = mixture.volume()
+        degree = (mixture.degree() * mixture.volume() + degree * volume) / (volume + mixture.volume())
+        volume += mixture.volume()
         return this
     }
 
-    override fun spoil(): Mixture {
-        return Vodka(
-            BaseSpirit(volume * degree / 100),
-            BaseWater(volume - volume * degree / 100),
-        )
-    }
+    override fun spoil(): Mixture = Vodka(
+        BaseSpirit(degree * volume),
+        BaseWater(volume - degree * volume)
+    )
 }
